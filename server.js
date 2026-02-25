@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const Razorpay = require("razorpay");
 const multer = require("multer");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 
 const app = express();
@@ -36,10 +37,16 @@ const upload = multer({ storage: storage });
 app.use("/uploads", express.static("uploads"));
 
 // Models
-const User = mongoose.model("User", {
-  email: String,
-  password: String
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true },
+  password: String,
+  role: { type: String, default: "user" }  // user or admin
 });
+
+const User = mongoose.model("User", userSchema);
 
 const Product = mongoose.model("Product", {
   name: String,
@@ -81,14 +88,34 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// Login (simple hardcoded login)
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
+// ======================
+// LOGIN ROUTE
+// ======================
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  if (email === "admin@zaitoon.com" && password === "123456") {
-    res.json({ success: true });
-  } else {
-    res.json({ success: false });
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    const bcrypt = require("bcrypt");
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.json({ success: false, message: "Incorrect password" });
+    }
+
+    res.json({
+      success: true,
+      role: user.role,
+      name: user.name
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Login error" });
   }
 });
 
@@ -162,6 +189,38 @@ app.post("/create-order", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Order creation failed" });
+  }
+});
+
+// ======================
+// SIGNUP ROUTE
+// ======================
+app.post("/signup", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({ success: false, message: "User already exists" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Save new user
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword
+    });
+
+    await newUser.save();
+
+    res.json({ success: true, message: "Signup successful" });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Signup error" });
   }
 });
 
