@@ -1,0 +1,196 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const Razorpay = require("razorpay");
+const multer = require("multer");
+const path = require("path");
+
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/uploads", express.static("uploads"));  // ✅ ADD THIS
+app.use(express.static("public"));
+
+// MongoDB connection
+mongoose.connect("mongodb://127.0.0.1:27017/zaitoonpharma")
+.then(()=> console.log("MongoDB connected"))
+.catch(err => console.log(err));
+
+// Image upload setup
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Serve uploaded images
+app.use("/uploads", express.static("uploads"));
+
+// Models
+const User = mongoose.model("User", {
+  email: String,
+  password: String
+});
+
+const Product = mongoose.model("Product", {
+  name: String,
+  price: Number,
+  image: String,
+  category: String   // ✅ NEW
+});
+
+
+const Wholesale = mongoose.model("Wholesale", {
+  business: String,
+  license: String,
+  contact: String,
+  phone: String,
+  products: String,
+  date: { type: Date, default: Date.now }
+});
+
+const Order = mongoose.model("Order", {
+  customerName: String,
+  phone: String,
+  address: String,
+  items: Array,
+  total: Number,
+  date: { type: Date, default: Date.now }
+});
+
+
+// Razorpay config (USE YOUR REAL TEST KEYS)
+const razorpay = new Razorpay({
+  key_id: "YOUR_RAZORPAY_KEY_ID",
+  key_secret: "YOUR_RAZORPAY_SECRET"
+});
+
+// Routes
+
+// Home
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
+
+// Login (simple hardcoded login)
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === "admin@zaitoon.com" && password === "123456") {
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
+  }
+});
+
+// Get products
+app.get("/products", async (req, res) => {
+  const products = await Product.find();
+  res.json(products);
+});
+
+//get orders
+app.get("/orders", async (req,res)=>{
+  const orders = await Order.find();
+  res.json(orders);
+});
+
+// Add product (admin with image upload)
+app.post("/add-product", upload.single("image"), async (req, res) => {
+
+  try {
+    const p = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      category: req.body.category,
+      image: req.file ? req.file.filename : ""
+    });
+
+    await p.save();
+    res.send("Product added");
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error adding product");
+  }
+
+});
+
+
+// place order
+app.post("/place-order", async (req, res) => {
+  const order = new Order({
+    customerName: req.body.name,
+    phone: req.body.phone,
+    address: req.body.address,
+    items: req.body.items,
+    total: req.body.total
+  });
+
+  await order.save();
+  res.json({ success: true });
+});
+
+
+// Wholesale inquiry
+app.post("/wholesale-inquiry", async (req, res) => {
+  const w = new Wholesale(req.body);
+  await w.save();
+  res.send("Wholesale inquiry received");
+});
+
+// Razorpay order (ONLY ONE ROUTE)
+app.post("/create-order", async (req, res) => {
+  try {
+    const amount = req.body.amount;
+
+    const order = await razorpay.orders.create({
+      amount: amount * 100,
+      currency: "INR"
+    });
+
+    res.json(order);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Order creation failed" });
+  }
+});
+
+// Start server
+app.listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
+});
+
+// Get all products (admin)
+app.get("/admin-products", async (req, res) => {
+  const products = await Product.find();
+  res.json(products);
+});
+
+// Delete product
+app.delete("/delete-product/:id", async (req, res) => {
+  await Product.findByIdAndDelete(req.params.id);
+  res.json({ success: true });
+});
+
+// Delete product (admin)
+app.delete("/delete-product/:id", async (req, res) => {
+  await Product.findByIdAndDelete(req.params.id);
+  res.send("Product deleted");
+});
+
+// Update product
+app.put("/update-product/:id", async (req, res) => {
+  await Product.findByIdAndUpdate(req.params.id, req.body);
+  res.json({ success: true });
+});
+

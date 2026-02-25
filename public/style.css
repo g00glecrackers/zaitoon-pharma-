@@ -1,0 +1,460 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f7fbff;
+  color: #222;
+  transition: 0.3s;
+}
+
+.dark {
+  background: #121212;
+  color: #fff;
+}
+
+header {
+  background: #599a59;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h2 {
+  margin: 0;
+}
+
+button {
+  padding: 10px 16px;
+  background: #599a59;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #599a59;
+  transform: scale(1.05);
+}
+
+section {
+  padding: 30px;
+}
+
+input, textarea {
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  animation: fadeIn 0.6s ease;
+}
+
+.dark .card {
+  background: #1e1e1e;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+footer {
+  background: #599a59;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+section {
+  animation: fadeIn 0.6s ease;
+}
+
+img {
+  object-fit: cover;
+}
+
+/* footer section style */
+.footer-top {
+  background: #000;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.footer-top span {
+  color: #00c2a8;
+  font-weight: bold;
+}
+
+.footer {
+  background: #111;
+  color: #ddd;
+  padding: 40px 20px 20px 20px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-left h2 {
+  color: #fff;
+}
+
+.country {
+  margin-top: 15px;
+  padding: 8px;
+  background: #222;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.footer-column h4,
+.footer-social h4 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-column a {
+  display: block;
+  color: #bbb;
+  text-decoration: none;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.footer-column a:hover {
+  color: #00c2a8;
+}
+
+.social-icons a {
+  font-size: 30px;
+  color: #25D366;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #1ebe5d;
+}
+
+.footer-bottom {
+  border-top: 1px solid #333;
+  margin-top: 30px;
+  padding-top: 20px;
+  font-size: 13px;
+  text-align: center;
+  color: #aaa;
+}
+.whatsapp-float {
+  position: fixed;        /* 👈 this keeps it floating */
+  bottom: 60px;           /* 👈 distance from bottom */
+  right: 60px;  
+  display: flex;
+  align-items: center;
+  justify-content: center;          /* 👈 distance from right */
+  background: #25D366;
+  color: white;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 28px;
+  text-align: center;
+  text-decoration: none;
+  z-index: 9999;          /* 👈 keeps it above everything */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.whatsapp-float:hover {
+  background: #1ebe5d;
+}
+#productList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 15px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* admin header style */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #599a59;
+  color: white;
+  padding: 10px 20px;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.home-icon {
+  font-size: 22px;
+  color: white;
+  text-decoration: none;
+}
+
+.home-icon:hover {
+  color: #25D366; /* WhatsApp green or any highlight */
+}
+ /* admin style */
+ .admin-link {
+  color: white; /* gold */
+  font-weight: bold;
+}
+.admin-link:hover {
+  color: #fff;
+}
+
+/* PRODUCTS GRID */
+#products{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 40px;
+}
+
+/* PRODUCT CARD */
+.card{
+ border-radius: 15px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+
+  display: flex;
+  flex-direction: column;   /* vertical layout */
+  height: 100%; 
+}
+
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* PRODUCT IMAGE FIX SIZE */
+.card img{
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+/* PRODUCT NAME */
+.card h3{
+  margin: 10px 0;
+  font-size: 20px;
+  min-height: 50px;     /* keeps product names aligned */
+}
+
+/* PRICE */
+.card p{
+  font-size: 18px;
+  font-weight: bold;
+  
+  margin-top: auto;     /* pushes price down evenly */
+}
+
+/* BUTTON */
+.card button{
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #599a59;
+  color: white;
+  cursor: pointer;
+  margin: 15px;
+}
+
+.card button:hover{
+  background: #599a59;
+}
+
+/* Category dropdown styling */
+.category-select {
+  width: 320px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: white;
+}
+
+/* focus effect */
+.category-select:focus {
+  border-color: #599a59;
+  box-shadow: 0 0 5px rgba(30, 92, 198, 0.3);
+}
+
+/* hover effect */
+.category-select:hover {
+  border-color: #599a59;
+}
+
+/* About section */
+/* ABOUT SECTION */
+.about-section{
+  padding:60px 10%;
+}
+
+.about-container{
+  display:flex;
+  align-items:center;
+  gap:50px;
+}
+
+.about-image img{
+  width:450px;
+  border-radius:15px;
+}
+
+.about-text{
+  max-width:600px;
+}
+
+.about-text p{
+  color:#555;
+  line-height:1.6;
+}
+
+/* HEALTH SECTION BIGGER */
+.health-section{
+  padding: 100px 10%;
+  text-align: center;
+}
+
+/* BIGGER TITLE */
+.health-section h2{
+  font-size: 36px;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+/* GRID */
+.health-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* BIGGER CARDS */
+.health-card{
+  padding: 40px;
+  font-size: 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.health-card:hover{
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* Checkout cart card fix */
+.cart-card {
+  text-align: center;
+  padding: 15px;
+}
+
+.cart-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+/* Checkout items side by side */
+#cartItems {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* Category images */
+.health-card img{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+
+  /* clean border */
+  border-bottom: 2px solid #599a59;
+}
+
+/* Center text */
+.health-card{
+  padding: 0;                 /* ✅ remove inner white space */
+  border-radius: 15px;
+  overflow: hidden;           /* keeps image inside rounded card */
+  background: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+/* Text style */
+.health-card p{
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}

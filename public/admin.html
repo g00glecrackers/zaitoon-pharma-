@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Zaitoon Pharma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script>
+if(!localStorage.getItem("isAdmin")){
+  alert("Access denied. Admin login required.");
+  window.location.href = "login.html";
+}
+</script>
+
+<header>
+  <h2>Zaitoon Pharma - Admin Panel</h2>
+  <a href="index.html" class="admin-link">⬅ Back to Home</a>
+</header>
+
+<section>
+  <h2>Add Product</h2>
+
+  <!-- IMPORTANT: form uses onsubmit -->
+  <form id="productForm" enctype="multipart/form-data">
+    <input id="name" placeholder="Product Name" required><br><br>
+    <input id="price" placeholder="Price" required><br><br>
+    <input type="file" id="image" accept="image/*" required>
+
+     <select id="category" class="category-select" required>
+  <option value="">Select Category</option>
+  <option value="Pharmacy">💊 Pharmacy</option>
+  <option value="Machines">⚙️ Machines</option>
+  <option value="Devices">🩺 Devices</option>
+</select>
+
+
+   <button type="button" onclick="addProduct()">Add Product</button>
+  </form>
+
+  <h2>All Products</h2>
+<div id="productList" class="grid"></div>
+</section>
+
+<script>
+async function addProduct(){
+
+  const formData = new FormData();
+
+  formData.append("name", document.getElementById("name").value);
+  formData.append("price", document.getElementById("price").value);
+  formData.append("category", document.getElementById("category").value);
+  formData.append("image", document.getElementById("image").files[0]);
+
+  const res = await fetch("/add-product", {
+    method: "POST",
+    body: formData
+  });
+
+  alert("✅ Product added successfully!");
+  document.getElementById("productForm").reset();
+}
+</script>
+
+<script>
+
+// LOAD PRODUCTS
+async function loadProducts(){
+  const res = await fetch("/products");
+  const products = await res.json();
+
+  const div = document.getElementById("productList");
+  div.innerHTML = "";
+
+  products.forEach(p => {
+    div.innerHTML += `
+      <div class="card">
+        <img src="uploads/${p.image}" width="120">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+
+        <button onclick="deleteProduct('${p._id}')"
+        style="background:red;color:white;margin-top:10px">
+        Delete
+        </button>
+      </div>
+    `;
+  });
+}
+
+// DELETE PRODUCT
+async function deleteProduct(id){
+  if(!confirm("Delete this product?")) return;
+
+  await fetch("/delete-product/" + id, {
+    method: "DELETE"
+  });
+
+  alert("Product deleted");
+  loadProducts();
+}
+
+// run when page loads
+loadProducts();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zaitoon Pharma</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<header>
+  <h2>Zaitoon Pharma</h2>
+  <div>
+    <a href="index.html"><button>Home</button></a>
+    <a href="wholesale.html"><button>Wholesale Supply</button></a>
+    <a href="login.html"><button>Login</button></a>
+    <a href="checkout.html"><button>Checkout</button></a>
+  
+
+
+    <button onclick="toggleDark()">🌙 Dark</button>
+
+
+    <button id="adminBtn" style="display:none" onclick="location.href='admin.html'">Admin</button>
+
+    
+<script>
+if(localStorage.getItem("isAdmin")){
+  document.getElementById("adminBtn").style.display="inline-block";
+}
+</script>
+
+  </div>
+</header>
+
+
+<section style="text-align:center;">
+  <h1>🏥 Zaitoon Pharma</h1>
+  <h2>Your Trusted Pharmacy & Medical Equipment Provider</h2>
+  <p>Medicines, BiPAP/CPAP, Oxygen Concentrators, Nebulizers & more</p>
+  <button onclick="location.href='checkout.html'">Order Now</button>
+  <button onclick="location.href='wholesale.html'">Wholesale Supply</button>
+</section>
+
+
+<section>
+  <h2>Search Products</h2>
+  <input type="text" placeholder="Search products..." onkeyup="searchProducts()">
+</section>
+
+<!-- ================= ABOUT ZAITOON PHARMA ================= -->
+<section class="about-section">
+
+  <div class="about-container">
+
+    <div class="about-image">
+      <img src="images/pharmacy.jpg" width="350">
+    </div>
+
+    <div class="about-text">
+      <h2>🏥 About Zaitoon Pharma</h2>
+
+      <p>
+      <strong>Zaitoon Pharma</strong> is your trusted pharmacy and medical
+      equipment provider in Ballari. We supply high-quality medicines,
+      respiratory machines, oxygen concentrators, BiPAP/CPAP machines,
+      nebulizers, and healthcare products.
+      </p>
+
+      <p>
+      Our mission is to deliver reliable healthcare products at affordable
+      prices with fast support and wholesale supply for hospitals,
+      clinics, and individuals.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= HEALTH CONDITIONS ================= -->
+<section class="health-section">
+<h2>Browse by Health Conditions</h2>
+
+<div class="health-grid">
+
+<div class="health-card" onclick="filterCategory('Pharmacy')">
+  <img src="images/categories/medicines.jpg">
+  <p>Medicines</p>
+</div>
+
+<div class="health-card" onclick="filterCategory('Machines')">
+  <img src="images/pharmacy.jpg">
+  <p>Machines</p>
+</div>
+
+<div class="health-card" onclick="filterCategory('Devices')">
+  <img src="images/categories/medical_devices.avif">
+  <p>Medical Devices</p>
+</div>
+
+<div class="health-card" onclick="filterCategory('All')">
+  <img src="images/categories/offers.jpg">
+  <p>Offers</p>
+</div>
+
+</div>
+
+<!-- Category Products Display -->
+<div id="categoryResults" class="grid"></div>
+</section>
+
+<section>
+  <h2>⭐ Customer Reviews</h2>
+  <div class="grid">
+    <div class="card">
+      <p>"Very good service and genuine medicines."</p>
+      <strong>- Ahmed</strong>
+    </div>
+    <div class="card">
+      <p>"Fast delivery and helpful staff."</p>
+      <strong>- Rahman</strong>
+    </div>
+    <div class="card">
+      <p>"Best pharmacy for medical equipment."</p>
+      <strong>- Fatima</strong>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <h2>Wholesale Medicine Supply</h2>
+  <p>We supply medicines in bulk to pharmacies, hospitals, and clinics.</p>
+  <a href="wholesale.html"><button>Wholesale Inquiry</button></a>
+</section>
+
+<footer>
+  <p>© 2026 Zaitoon Pharma</p>
+  <p>Wholesale orders are accepted only from licensed medical institutions as per government regulations.</p>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- Top footer banner -->
+<div class="footer-top">
+  Save on quality medical products you trust. <span>Contact us on WhatsApp today.</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- LEFT -->
+    <div class="footer-left">
+      <h2>Zaitoon Pharma</h2>
+      <p>Your trusted pharmacy & medical equipment provider</p>
+
+      <div class="country">
+        🇮🇳 India
+      </div>
+    </div>
+
+    <!-- COLUMN 1 -->
+    <div class="footer-column">
+      <h4>LEARN MORE</h4>
+      <a href="#">Products</a>
+      <a href="#">Wholesale Supply</a>
+      <a href="#">Medical Equipment</a>
+      <a href="#">Home Healthcare</a>
+      <a href="#">Search Products</a>
+    </div>
+
+    <!-- COLUMN 2 -->
+    <div class="footer-column">
+      <h4>COMPANY</h4>
+      <a href="#">About Us</a>
+      <a href="#">Business Information</a>
+      <a href="#">Careers</a>
+      <a href="#">Affiliates</a>
+      <a href="#">Legal & Privacy</a>
+    </div>
+
+    <!-- COLUMN 3 -->
+    <div class="footer-column">
+      <h4>SUPPORT</h4>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQ</a>
+      <a href="#">Site Map</a>
+      <a href="#">Wholesale Inquiry</a>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="footer-social">
+  <h4>Contact Us</h4>
+  <div class="social-icons">
+    <a href="https://wa.me/8553490624" target="_blank">💬 WhatsApp</a>
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- BUSINESS INFO -->
+  <div class="footer-bottom">
+    <p><strong>Trade Name:</strong> Zaitoon Pharma</p>
+    <p><strong>Legal Name:</strong> Kuntewale Mohammed Ibrahim Khaleelulla</p>
+    <p><strong>GSTIN:</strong> 29FRPPK6972J1ZQ</p>
+    <p><strong>Address:</strong> TS NO 332/1A2/7B, Plot No 43698/7B, Shop No 1, Ward No 29, Goldsmith Colony, Near Ek Minar Masjid, Cowl Bazar, Ballari, Karnataka – 583102</p>
+    <p>© 2026 Zaitoon Pharma. All rights reserved.</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/8553490624" target="_blank" class="whatsapp-float">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+const adminLink = document.getElementById("adminLink");
+
+if(!localStorage.getItem("isAdmin")){
+  adminLink.style.display = "none";
+}
+</script>
+
+
+</body>
+</html>

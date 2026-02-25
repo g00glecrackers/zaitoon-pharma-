@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout - Zaitoon Pharma</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<header>
+  <h2>Zaitoon Pharma - Inquiry / Order</h2>
+  <a href="index.html"><button>Back to Home</button></a>
+</header>
+
+<section>
+  <h2>Customer Details</h2>
+
+  <input id="customerName" placeholder="Full Name"><br><br>
+  <input id="customerPhone" placeholder="Phone Number"><br><br>
+  <textarea id="customerAddress" placeholder="Delivery Address"></textarea><br><br>
+
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+
+  <h3 id="totalPrice">Total: ₹0</h3>
+
+  <button onclick="sendToWhatsApp()">Send Inquiry on WhatsApp</button>
+</section>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cartDiv = document.getElementById("cartItems");
+let total = 0;
+
+// LOGIN CHECK (optional)
+if(!localStorage.getItem("loggedIn")){
+  alert("Please login before checkout");
+  window.location.href = "login.html";
+}
+
+// Render cart
+function renderCart(){
+  cartDiv.innerHTML = "";
+  total = 0;
+
+  if(cart.length === 0){
+    cartDiv.innerHTML = "<p>Your cart is empty.</p>";
+    document.getElementById("totalPrice").innerText = "Total: ₹0";
+    return;
+  }
+
+  cart.forEach((item, index) => {
+
+  total += Number(item.price);
+
+  cartDiv.innerHTML += `
+    <div class="card cart-card">
+      <img src="uploads/${item.image}">
+      <h3>${item.name}</h3>
+      <p>₹${item.price}</p>
+
+      <button onclick="removeFromCart(${index})"
+      style="background:red;margin-top:10px">
+        Remove
+      </button>
+    </div>
+  `;
+});
+
+  document.getElementById("totalPrice").innerText = "Total: ₹" + total;
+}
+
+/* Cart remove function */
+function removeFromCart(index){
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+// WhatsApp Order Function
+function sendToWhatsApp(){
+  let name = document.getElementById("customerName").value;
+  let phone = document.getElementById("customerPhone").value;
+  let address = document.getElementById("customerAddress").value;
+
+  if(!name || !phone || !address){
+    alert("Please fill all customer details");
+    return;
+  }
+
+  if(total <= 0){
+    alert("Cart is empty");
+    return;
+  }
+
+  let message = "Hello Zaitoon Pharma,%0A";
+  message += "Customer Name: " + name + "%0A";
+  message += "Phone: " + phone + "%0A";
+  message += "Address: " + address + "%0A%0A";
+  message += "Products:%0A";
+
+  cart.forEach(item => {
+    message += "- " + item.name + " (₹" + item.price + ")%0A";
+  });
+
+  message += "%0ATotal: ₹" + total;
+
+  // 🔴 Replace with your WhatsApp number (country code + number, no spaces)
+  let adminPhone = "8553490624";
+
+  let url = `https://wa.me/${adminPhone}?text=${message}`;
+  window.open(url, "_blank");
+
+  // Optional: clear cart after sending
+  localStorage.removeItem("cart");
+   cart = [];
+   renderCart();
+}
+
+renderCart();
+</script>
+
+<a href="https://wa.me/8553490624" target="_blank" class="whatsapp-float">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+
+</body>
+</html>
