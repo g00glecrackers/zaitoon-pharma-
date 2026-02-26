@@ -103,27 +103,18 @@ function login(e){
 fetch("/login", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    email: email,
-    password: password
-  })
+  body: JSON.stringify({ email, password })
 })
 .then(res => res.json())
 .then(data => {
-
-  if (!data.success) {
-    alert(data.message);
-    return;
-  }
-
-  console.log("Logged in user role:", data.role);  // 👈 ADD THIS
-
   if (data.role === "admin") {
-    window.location.href = "admin.html";
+    window.location.href = "/admin.html";
   } else {
-    window.location.href = "index.html";
+    window.location.href = "/index.html";
   }
-
+})
+.catch(err => {
+  alert("Login error");
 });
 }
 </script>

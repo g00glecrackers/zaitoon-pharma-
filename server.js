@@ -95,26 +95,21 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-
     if (!user) {
-      return res.json({ success: false, message: "User not found" });
+      return res.status(400).json({ message: "User not found" });
     }
 
-    
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      return res.json({ success: false, message: "Incorrect password" });
+      return res.status(400).json({ message: "Wrong password" });
     }
 
-    res.json({
-      success: true,
-      role: user.role,
-      name: user.name
-    });
+    // Send role back
+    res.json({ role: user.role });
 
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Login error" });
+  } catch (err) {
+    console.log("Login error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
