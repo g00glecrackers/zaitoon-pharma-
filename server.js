@@ -17,9 +17,9 @@ app.use("/uploads", express.static("uploads"));  // ✅ ADD THIS
 app.use(express.static("public"));
 
 // MongoDB connection
-mongoose.connect("mongodb://127.0.0.1:27017/zaitoonpharma")
-.then(()=> console.log("MongoDB connected"))
-.catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
 // Image upload setup
 const storage = multer.diskStorage({
