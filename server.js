@@ -100,7 +100,7 @@ app.post("/login", async (req, res) => {
       return res.json({ success: false, message: "User not found" });
     }
 
-    const bcrypt = require("bcrypt");
+    
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
