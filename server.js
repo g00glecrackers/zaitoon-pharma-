@@ -37,7 +37,6 @@ const upload = multer({ storage: storage });
 app.use("/uploads", express.static("uploads"));
 
 // Models
-const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: String,
