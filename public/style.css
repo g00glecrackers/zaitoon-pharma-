@@ -465,3 +465,54 @@ img {
     height: 50px;
     object-fit: contain;
 }
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #4f8f4f;
+    padding: 10px 40px;
+}
+
+/* Brand (logo + name) */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Logo */
+.brand img {
+    height: 42px;     /* Professional size */
+    width: auto;
+}
+
+/* Brand text */
+.brand h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+/* Nav links */
+nav div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Buttons */
+nav button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+nav button:hover {
+    opacity: 0.8;
+}
