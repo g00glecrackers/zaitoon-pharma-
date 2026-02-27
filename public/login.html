@@ -110,11 +110,15 @@ fetch("/login", {
 })
 .then(res => res.json())
 .then(data => {
-  if (data.role === "admin") {
-    window.location.href = "/admin.html";
-  } else {
-    window.location.href = "/index.html";
-  }
+
+    localStorage.setItem("loggedIn", "true");   // 🔥 ADD THIS
+
+    if (data.role === "admin") {
+        localStorage.setItem("isAdmin", "true");
+        window.location.href = "/admin.html";
+    } else {
+        window.location.href = "/index.html";
+    }
 })
 .catch(err => {
   alert("Login error");
