@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));  // ✅ ADD THIS
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
